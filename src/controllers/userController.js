@@ -42,8 +42,7 @@ export const loginUser = expressAsyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    const normalizedEmail = email.toLowerCase(); // Ensure email is case-insensitive
-    const userExists = await User.findOne({ email: normalizedEmail });
+    const userExists = await User.findOne({ email });
 
     if (
       userExists &&
@@ -61,6 +60,88 @@ export const loginUser = expressAsyncHandler(async (req, res, next) => {
       // Throw an error if login details are incorrect
       return next(new AppError("Invalid email or password", 401));
     }
+  } catch (error) {
+    next(error); // Pass error to the error handler
+  }
+});
+
+// profile
+export const profile = expressAsyncHandler(async (req, res, next) => {
+  const { _id } = req.body;
+
+  try {
+    const user = await User.findById(_id);
+
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        isActive: user.isActive,
+      });
+    } else {
+      throw new AppError("User not found");
+    }
+  } catch (error) {
+    next(error); // Pass error to the error handler
+  }
+});
+
+// profile update
+export const UpdateProfile = expressAsyncHandler(async (req, res, next) => {
+  const { _id } = req.user;
+
+  try {
+    const user = await User.findById(_id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      user.address = req.body.address || user.address;
+      user.phone = req.body.phone || user.phone;
+
+      await user.save();
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        isActive: user.isActive,
+        address: user.address,
+      });
+    } else {
+      throw new AppError("User not found");
+    }
+  } catch (error) {
+    next(error); // Pass error to the error handler
+  }
+});
+
+// get all user profile
+export const getAllProfile = expressAsyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.find({});
+
+    if (user) {
+      res.json(user);
+    } else {
+      throw new AppError("User not found");
+    }
+  } catch (error) {
+    next(error); // Pass error to the error handler
+  }
+});
+// delete user profile
+export const deleteUserProfile = expressAsyncHandler(async (req, res, next) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User removed" });
   } catch (error) {
     next(error); // Pass error to the error handler
   }
