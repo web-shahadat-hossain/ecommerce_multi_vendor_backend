@@ -9,6 +9,7 @@ import {
   notFoundErrorHandler,
 } from "./src/middleware/errorHandler.js";
 import userRouter from "./src/routes/userRoutes.js";
+import vendorRoute from "./src/routes/vendorRoutes.js";
 // local  environment from .env file
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(cors());
 
 // Api routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/vendor", vendorRoute);
 // Error handler middlewares
 app.use(errorHandler);
 app.use(notFoundErrorHandler);

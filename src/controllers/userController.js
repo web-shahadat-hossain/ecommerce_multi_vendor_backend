@@ -3,7 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import { generateToken } from "../utils/utils.js";
 import { AppError } from "../middleware/errorHandler.js";
 
-// Register User
+// Register User public route
 export const registerUser = expressAsyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
 
@@ -37,7 +37,7 @@ export const registerUser = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-// Login User
+// Login User public route
 export const loginUser = expressAsyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -65,7 +65,7 @@ export const loginUser = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-// profile
+// profile private route
 export const profile = expressAsyncHandler(async (req, res, next) => {
   const { _id } = req.body;
 
@@ -89,7 +89,7 @@ export const profile = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-// profile update
+// profile update private route
 export const UpdateProfile = expressAsyncHandler(async (req, res, next) => {
   const { _id } = req.user;
 
@@ -123,7 +123,7 @@ export const UpdateProfile = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-// get all user profile
+// get all user profile admin private route
 export const getAllProfile = expressAsyncHandler(async (req, res, next) => {
   try {
     const user = await User.find({});
@@ -137,7 +137,7 @@ export const getAllProfile = expressAsyncHandler(async (req, res, next) => {
     next(error); // Pass error to the error handler
   }
 });
-// delete user profile
+// delete user profile  private route
 export const deleteUserProfile = expressAsyncHandler(async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req.params.id);
