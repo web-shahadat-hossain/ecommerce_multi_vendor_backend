@@ -8,6 +8,7 @@ import {
   errorHandler,
   notFoundErrorHandler,
 } from "./src/middleware/errorHandler.js";
+import userRouter from "./src/routes/userRoutes.js";
 // local  environment from .env file
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.use(morgan("dev"));
 app.use(cors());
 
 // Api routes
-
+app.use("/api/v1/user", userRouter);
 // Error handler middlewares
 app.use(errorHandler);
 app.use(notFoundErrorHandler);
