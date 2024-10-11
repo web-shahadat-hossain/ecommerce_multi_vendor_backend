@@ -15,6 +15,8 @@ import categoryRouter from "./src/routes/CategoryRoutes.js";
 import brandRouter from "./src/routes/brandRoute.js";
 import subCategoryRouter from "./src/routes/subCategoryRoutes.js";
 import wishlistRouter from "./src/routes/wishlistRoutes.js";
+import reviewRouter from "./src/routes/reviewRoutes.js";
+import uploadRouter from "./src/routes/uploadRoutes.js";
 // local  environment from .env file
 dotenv.config();
 
@@ -38,6 +40,8 @@ app.use("/api/v1/brand", brandRouter);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/subcategory", subCategoryRouter);
 app.use("/api/v1/wishlist", wishlistRouter);
+app.use("/api/v1/review", reviewRouter);
+app.use("/api/v1/upload", uploadRouter);
 // Error handler middlewares
 app.use(errorHandler);
 app.use(notFoundErrorHandler);

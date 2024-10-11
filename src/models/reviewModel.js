@@ -26,6 +26,10 @@ const reviewSchema = new mongoose.Schema(
         default: Date.now(),
       },
     },
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
