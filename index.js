@@ -11,6 +11,10 @@ import {
 import userRouter from "./src/routes/userRoutes.js";
 import vendorRoute from "./src/routes/vendorRoutes.js";
 import productRouter from "./src/routes/productRoutes.js";
+import categoryRouter from "./src/routes/CategoryRoutes.js";
+import brandRouter from "./src/routes/brandRoute.js";
+import subCategoryRouter from "./src/routes/subCategoryRoutes.js";
+import wishlistRouter from "./src/routes/wishlistRoutes.js";
 // local  environment from .env file
 dotenv.config();
 
@@ -30,6 +34,10 @@ app.use(cors());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/vendor", vendorRoute);
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/brand", brandRouter);
+app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/subcategory", subCategoryRouter);
+app.use("/api/v1/wishlist", wishlistRouter);
 // Error handler middlewares
 app.use(errorHandler);
 app.use(notFoundErrorHandler);
