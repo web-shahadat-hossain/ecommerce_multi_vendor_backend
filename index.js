@@ -18,6 +18,7 @@ import wishlistRouter from "./src/routes/wishlistRoutes.js";
 import reviewRouter from "./src/routes/reviewRoutes.js";
 import uploadRouter from "./src/routes/uploadRoutes.js";
 import orderRouter from "./src/routes/orderRoutes.js";
+import supportRouter from "./src/routes/SupportRoutes.js";
 // local  environment from .env file
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/v1/wishlist", wishlistRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/upload", uploadRouter);
 app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/support", supportRouter);
 // Error handler middlewares
 app.use(errorHandler);
 app.use(notFoundErrorHandler);

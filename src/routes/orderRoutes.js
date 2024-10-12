@@ -24,4 +24,3 @@ orderRouter.patch("/:id/return", handleOrderReturn);
 orderRouter.patch("/:id/return/status", handleOrderReturnStatus);
 
 export default orderRouter;
-orderRouter;
