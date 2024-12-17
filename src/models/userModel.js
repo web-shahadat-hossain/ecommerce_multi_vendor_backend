@@ -15,10 +15,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     role: {
       type: String,
-      enum: ["user", "vender", "admin"],
-      default: "user",
+      enum: ["user", "vendor", "admin"],
+      default: "admin",
     },
     address: {
       street: String,

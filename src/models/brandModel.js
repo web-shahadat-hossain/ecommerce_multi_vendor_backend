@@ -12,8 +12,20 @@ const brandSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    description: String,
     logo: String,
+    totalProduct: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: Boolean,
+      default: false,
+    },
+    image_alt_text: String,
+    totalOrder: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

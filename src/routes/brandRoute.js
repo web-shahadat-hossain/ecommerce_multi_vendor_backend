@@ -5,7 +5,7 @@ import {
   getAllBrands,
   getBrandBySlug,
   updateBrand,
-} from "../controllers/brandModel.js";
+} from "../controllers/BrandController.js";
 
 const brandRouter = express.Router();
 

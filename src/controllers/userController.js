@@ -38,28 +38,62 @@ export const registerUser = expressAsyncHandler(async (req, res, next) => {
 });
 
 // Login User public route
+// export const loginUser = expressAsyncHandler(async (req, res, next) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const userExists = await User.findOne({ email });
+
+//     if (
+//       userExists &&
+//       (await userExists.comparePassword(password, userExists.password))
+//     ) {
+//       // If user exists and password matches
+//       res.json({
+//         _id: userExists._id,
+//         name: userExists.name,
+//         email: userExists.email,
+//         role: userExists.role,
+//         token: generateToken(userExists._id),
+//       });
+//     } else {
+//       // Throw an error if login details are incorrect
+//       return next(new AppError("Invalid email or password", 401));
+//     }
+//   } catch (error) {
+//     next(error); // Pass error to the error handler
+//   }
+// });
+
+// Login User public route
 export const loginUser = expressAsyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
 
-    if (
-      userExists &&
-      (await userExists.comparePassword(password, userExists.password))
-    ) {
-      // If user exists and password matches
-      res.json({
-        _id: userExists._id,
-        name: userExists.name,
-        email: userExists.email,
-        role: userExists.role,
-        token: generateToken(userExists._id),
-      });
-    } else {
-      // Throw an error if login details are incorrect
-      return next(new AppError("Invalid email or password", 401));
+    if (!userExists) {
+      // If the user doesn't exist, return an error for invalid email
+      return next(new AppError("Invalid email or username", 401));
     }
+
+    const isPasswordValid = await userExists.comparePassword(
+      password,
+      userExists.password
+    );
+    if (!isPasswordValid) {
+      // If the password doesn't match, return an error for invalid password
+      return next(new AppError("Invalid password", 401));
+    }
+
+    // If both email and password are valid, return the user data and token
+    res.json({
+      _id: userExists._id,
+      name: userExists.name,
+      email: userExists.email,
+      role: userExists.role,
+      token: generateToken(userExists._id),
+    });
   } catch (error) {
     next(error); // Pass error to the error handler
   }

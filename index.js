@@ -32,7 +32,14 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors());
+// cors
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "localhost:3000"], // Set specific origin
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
 
 // Api routes
 app.use("/api/v1/user", userRouter);

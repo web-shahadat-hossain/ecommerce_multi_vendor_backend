@@ -19,8 +19,9 @@ export const createCategory = expressAsyncHandler(async (req, res) => {
 //@ access public
 export const getAllCategorys = expressAsyncHandler(async (req, res) => {
   try {
-    const categorys = await Category.find();
-    res.status(201).json({ status: true, data: categorys });
+    // Fetch categories sorted by updatedAt in descending order
+    const category = await Category.find().sort({ updatedAt: -1 });
+    res.status(201).json({ status: true, data: category });
   } catch (err) {
     throw new AppError(err, 400);
   }
@@ -31,7 +32,7 @@ export const getAllCategorys = expressAsyncHandler(async (req, res) => {
 //@ access public
 export const getCategoryBySlug = expressAsyncHandler(async (req, res) => {
   try {
-    const category = await Category.findOne({ slug: req.params.slug });
+    const category = await Category.findOne({ categoryId: req.params.slug });
     res.status(201).json({ status: true, data: category });
   } catch (err) {
     throw new AppError(err, 400);
@@ -43,9 +44,13 @@ export const getCategoryBySlug = expressAsyncHandler(async (req, res) => {
 //@ access private
 export const updateCategory = expressAsyncHandler(async (req, res) => {
   try {
-    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const category = await Category.updateOne(
+      { categoryId: req.params.id },
+      req.body,
+      {
+        new: true,
+      }
+    );
 
     if (!category) {
       throw new AppError("Category Not found", 404);
