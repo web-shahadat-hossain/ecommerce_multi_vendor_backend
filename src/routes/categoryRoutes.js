@@ -5,14 +5,17 @@ import {
   getAllCategorys,
   getCategoryBySlug,
   updateCategory,
+  getAllCategoryData,
 } from "../controllers/CategoryController.js";
+import { authorize, protect } from "../middleware/authMiddleware.js";
 
 const categoryRouter = express.Router();
 
-categoryRouter.post("/", createCategory);
+categoryRouter.post("/", protect, authorize("admin"), createCategory);
 categoryRouter.get("/all", getAllCategorys);
+categoryRouter.get("/all/list", getAllCategoryData);
 categoryRouter.get("/:slug", getCategoryBySlug);
-categoryRouter.put("/:id", updateCategory);
-categoryRouter.delete("/:id", deleteCategory);
+categoryRouter.put("/:id", protect, authorize("admin"), updateCategory);
+categoryRouter.delete("/:id", protect, authorize("admin"), deleteCategory);
 
 export default categoryRouter;

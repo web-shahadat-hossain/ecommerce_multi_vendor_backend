@@ -30,7 +30,7 @@ const categoryModel = new mongoose.Schema(
     subCategory: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: "subCategory",
+        ref: "SubCategory",
       },
     ],
   },

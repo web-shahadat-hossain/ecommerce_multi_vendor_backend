@@ -19,8 +19,18 @@ export const createBrand = expressAsyncHandler(async (req, res) => {
 //@ access public
 export const getAllBrands = expressAsyncHandler(async (req, res) => {
   try {
-    const brands = await Brand.find();
-    res.status(201).json({ status: true, data: brands });
+    const brands = await Brand.find().sort({ createdAt: -1 }); // -1 for descending order
+    res.status(200).json({ status: true, data: brands });
+  } catch (err) {
+    throw new AppError(err, 400);
+  }
+});
+export const getAllNameBrands = expressAsyncHandler(async (req, res) => {
+  try {
+    const brands = await Brand.find()
+      .select("name _id")
+      .sort({ createdAt: -1 }); // -1 for descending order
+    res.status(200).json({ status: true, data: brands });
   } catch (err) {
     throw new AppError(err, 400);
   }

@@ -6,14 +6,6 @@ import { Category } from "../models/categoryModel.js";
 // @desc create SubCategory
 // @router /api/v1/SubCategory
 //@ access private route
-// export const createSubCategory = expressAsyncHandler(async (req, res) => {
-//   try {
-//     const newSubCategory = await SubCategory.create(req.body);
-//     res.status(201).json({ status: true, data: newSubCategory });
-//   } catch (err) {
-//     throw new AppError(err, 400);
-//   }
-// });
 
 export const createSubCategory = expressAsyncHandler(async (req, res, next) => {
   const { name, priority, parent_id } = req.body;

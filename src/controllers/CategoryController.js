@@ -26,6 +26,21 @@ export const getAllCategorys = expressAsyncHandler(async (req, res) => {
     throw new AppError(err, 400);
   }
 });
+export const getAllCategoryData = expressAsyncHandler(async (req, res) => {
+  try {
+    // Fetch categories sorted by updatedAt in descending order
+    const categories = await Category.find()
+      .sort({ updatedAt: -1 })
+      .select("name _id subCategory") // Select only name and _id
+      .populate({
+        path: "subCategory",
+        select: "name _id",
+      });
+    res.status(201).json({ status: true, data: categories });
+  } catch (err) {
+    throw new AppError(err, 400);
+  }
+});
 
 // @desc get a Category
 // @router /api/v1/Category/:slug
