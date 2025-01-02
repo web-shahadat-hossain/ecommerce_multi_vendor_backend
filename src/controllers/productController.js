@@ -7,6 +7,7 @@ import Product from "../models/productModel.js";
 //@ access private route
 export const createProduct = expressAsyncHandler(async (req, res) => {
   try {
+    console.log(req.body);
     const newProduct = await Product.create(req.body);
     res.status(201).json({ status: true, data: newProduct });
   } catch (err) {
@@ -20,7 +21,7 @@ export const createProduct = expressAsyncHandler(async (req, res) => {
 export const getAllProducts = expressAsyncHandler(async (req, res) => {
   try {
     const products = await Product.find();
-    console.log("products");
+    console.log(products);
     res.status(201).json({ status: true, data: products });
   } catch (err) {
     throw new AppError(err, 400);
