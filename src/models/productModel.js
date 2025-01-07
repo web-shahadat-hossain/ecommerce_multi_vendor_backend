@@ -24,9 +24,13 @@ const ProductSchema = new mongoose.Schema(
   {
     productName: { type: String, required: true },
     description: String,
-    descriptionTranslations: {
-      en: String,
-      bn: String, // Bangla
+    featured: {
+      type: Boolean,
+      default: false,
+    },
+    active: {
+      type: Boolean,
+      default: true,
     },
     vendor: {
       type: mongoose.Schema.Types.ObjectId,
